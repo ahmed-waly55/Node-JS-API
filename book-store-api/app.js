@@ -2,7 +2,7 @@ const express = require("express");
 
 // init App 
 const app = express();
-
+app.use(express.json())
 const books = [
     {
         id: 1,
@@ -38,7 +38,15 @@ app.get("/api/books/:id", (req, res) => {
     }
 })
 // POST Method 
-// app.post();
+app.post("/api/books", (req, res) => {
+    const book = {
+        id: books.length + 1,
+        name: req.body.name,
+        price: req.body.price
+    }
+    books.push(book)
+    res.status(201).json(book)
+});
 // PUT Method 
 // app.put();
 // DELETE Method 
