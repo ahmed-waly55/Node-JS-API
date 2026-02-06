@@ -1,5 +1,5 @@
 const express = require("express");
-
+const joi = require("joi")
 // init App 
 const app = express();
 app.use(express.json())
@@ -24,6 +24,15 @@ app.get("/", (req, res) => {
     res.send("hello Express API")
 });
 app.get("/api/books", (req, res) => {
+    const schema = joi.object({
+        name: joi.string().trim().min(3).max(50).required(),
+        price: max(10).require()
+    });
+
+    const { error } = schema.validate(req.body);
+    if (error) {
+        return res.status(400).json(error)
+    }
     // res.json(JSON.stringify(books))
     res.status(200).json(books)
 })
